@@ -1,0 +1,12 @@
+{
+    "db": {
+        "mongo": {
+            "port": 27017,
+            "host": "localhost",
+            "dbname": "computer-vehicle"
+        }
+    },
+    "server": {
+        "port": 3900
+    }
+}
