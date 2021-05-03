@@ -1,6 +1,6 @@
 class GenericController{
-    static resolve(next, promisse, thenFunc, errorStatusCode = 400){
-        promisse
+    static resolve(next, promise, thenFunc, errorStatusCode = 400){
+        promise
             .then(thenFunc)
             .catch(err => {
                 var error = new Error(err.message);

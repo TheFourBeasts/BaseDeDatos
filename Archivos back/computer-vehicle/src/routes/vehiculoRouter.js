@@ -8,5 +8,5 @@ api.get('', VehiculoController.getVehiculos);
 api.post('', VehiculoController.createVehiculo);
 api.put('/:id', VehiculoController.updateVehiculo);
 api.delete('/:id', VehiculoController.deleteVehiculo);
-
+api.delete('/', VehiculoController.deleteVehiculoAll);
 module.exports = api;

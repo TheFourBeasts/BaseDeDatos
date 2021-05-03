@@ -1,0 +1,57 @@
+const UsuarioDAO = require('../daos/usuarioDAO')
+
+class UsuarioService{
+    static async get(id) {
+		try {
+			const usuario = await UsuarioDAO.fetch(id)
+			return usuario
+		} catch(err) {
+			throw err
+		}
+    }
+
+	static async find(filter) {
+		try {
+			const usuarios = await UsuarioDAO.find(filter.filterData(), filter.pagination)
+			return usuarios
+		} catch(err) {
+			throw err
+		}
+	}
+
+    static async count(filter) {
+		try {
+			return await UsuarioDAO.count(filter.filterData())
+		} catch (err) {
+			throw err
+		}
+    }
+
+    static async save(usuario) {
+		try {
+			usuario = await UsuarioDAO.save(usuario)
+            return usuario
+		} catch (err) {
+			throw err
+		}
+    }
+
+	static async update(id, usuario) {
+		try {
+			usuario = await UsuarioDAO.update(id, usuario)
+			return await this.get(id)
+		} catch (err) {
+			throw err
+		}
+    }
+
+    static async delete(id) {
+		try {
+			return await UsuarioDAO.delete(id)
+		} catch (err) {
+			throw err
+		}
+    }
+}
+
+module.exports = UsuarioService

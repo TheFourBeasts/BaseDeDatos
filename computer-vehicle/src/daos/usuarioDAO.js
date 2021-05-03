@@ -1,14 +1,14 @@
-const Vehiculo = require('../models/vehiculo');
+const Usuario = require('../models/usuario');
 
-class VehiculoDAO{
-    static save(vehiculo){
+class UsuarioDAO{
+    static save(usuario){
         return new Promise((resolve, reject) => {
-            Vehiculo.create(vehiculo, (err, vehiculoStored) => {
-                if (err || !vehiculoStored){
-                    reject({message: "no pudo guardarse el vehiculo"});
+            Usuario.create(usuario, (err, usuarioStored) => {
+                if (err || !usuarioStored){
+                    reject({message: "no pudo guardarse el usuario"});
                 } else {
-                    vehiculo._id = vehiculoStored._id;
-                    resolve(vehiculo);
+                    usuario._id = usuarioStored._id;
+                    resolve(usuario);
                 }
             });
         })
@@ -16,11 +16,11 @@ class VehiculoDAO{
 
     static fetch(id){
         return new Promise((resolve, reject) => {
-            Vehiculo.findById(id).exec((err, vehiculo) => {
-                if (err || !vehiculo){
-                    reject ({message: "No pudo econtrarse el vehiculo"});
+            Usuario.findById(id).exec((err, usuario) => {
+                if (err || !usuario){
+                    reject ({message: "No pudo econtrarse el usuario"});
                 } else {
-                    resolve(vehiculo);
+                    resolve(usuario);
                 }
             })
         })
@@ -28,11 +28,11 @@ class VehiculoDAO{
 
     static find(filter, pagination){
         return new Promise((resolve, reject) => {
-            Vehiculo.find(filter).limit(pagination.limit).skip(pagination.offset).exec((err, vehiculos) => {
-                if (err || !vehiculos){
+            Usuario.find(filter).limit(pagination.limit).skip(pagination.offset).exec((err, usuarios) => {
+                if (err || !usuarios){
                     reject({message: "no se pudo realizar la busqueda"});
                 }else{
-                    resolve(vehiculos);                    
+                    resolve(usuarios);                    
                 }
             })
         })
@@ -40,7 +40,7 @@ class VehiculoDAO{
 
     static count(filter){
         return new Promise((resolve, reject) => {
-            Vehiculo.count(filter).exec((err, total) => {
+            Usuario.count(filter).exec((err, total) => {
                 if (err){
                     reject({message: "no se pudo realizar la busqueda"});
                 }else{
@@ -50,16 +50,16 @@ class VehiculoDAO{
         })
     }
 
-    static update(id, vehiculo) {
-		const {_id, ...data} = vehiculo._doc;
+    static update(id, usuario) {
+		const {_id, ...data} = usuario._doc;
 		let dtoUpdate = {$set:data}
         return new Promise((resolve, reject) => {
-            Vehiculo.findByIdAndUpdate(id, dtoUpdate).exec((err, vehiculo2) => {
-                if (err || !vehiculo2){
+            Usuario.findByIdAndUpdate(id, dtoUpdate).exec((err, usuario2) => {
+                if (err || !usuario2){
                     console.log(err);
                     reject({message: "error interno"});
                 } else {
-                    resolve(vehiculo2);
+                    resolve(usuario2);
                 }
             })
         })
@@ -68,9 +68,9 @@ class VehiculoDAO{
     static delete(id){
         return new Promise((resolve, reject) => {
             
-            Vehiculo.findByIdAndRemove(id).exec((err, deleted) => {
+            Usuario.findByIdAndRemove(id).exec((err, deleted) => {
                 if (err || !deleted){
-                    reject({message: "no se puede borrar el vehiculo"});
+                    reject({message: "no se puede borrar el usuario"});
                 } else {
                     resolve({_id:id});
                 }
@@ -79,4 +79,4 @@ class VehiculoDAO{
     }
 }
 
-module.exports = VehiculoDAO
+module.exports = UsuarioDAO

@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
 const app = require('../app');
-
 const config = require('../../config/goten-config');
 const serverConfig = config.server;
+const socketService = require('../services/socketService')
+const mqttService = require('../services/mqttService')
 
 mongoose.connect(config.getConnectionStringToMongo(), {})
     .then(() => {
         console.log("Conectado a la base de datos");
-        app.listen(serverConfig.port, () => {
+        
+        const server = app.listen(serverConfig.port, () => {
             console.log('Servidor escuchando peticiones');
         })
+        socketService.connect(server)
     })
     .catch((err) => {
         console.log(err);

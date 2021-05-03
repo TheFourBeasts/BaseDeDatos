@@ -63,6 +63,14 @@ class VehiculoController extends GenericController{
                 })
             })
     }
+    static deleteVehiculoAll(req, res, next) {
+        let id = req.params.id
+        VehiculoController.resolve(next, VehiculoService.deleteAll(), message => {
+                res.status(200).send({
+                    data: message
+                })
+            })
+    }
 }
 
 module.exports = VehiculoController

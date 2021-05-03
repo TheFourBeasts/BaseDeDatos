@@ -1,14 +1,14 @@
-const Vehiculo = require('../models/vehiculo');
+const Recorrido = require('../models/recorrido');
 
-class VehiculoDAO{
-    static save(vehiculo){
+class RecorridoDAO{
+    static save(recorrido){
         return new Promise((resolve, reject) => {
-            Vehiculo.create(vehiculo, (err, vehiculoStored) => {
-                if (err || !vehiculoStored){
-                    reject({message: "no pudo guardarse el vehiculo"});
+            Recorrido.create(recorrido, (err, recorridoStored) => {
+                if (err || !recorridoStored){
+                    reject({message: "no pudo guardarse el recorrido"});
                 } else {
-                    vehiculo._id = vehiculoStored._id;
-                    resolve(vehiculo);
+                    recorrido._id = recorridoStored._id;
+                    resolve(recorrido);
                 }
             });
         })
@@ -16,11 +16,11 @@ class VehiculoDAO{
 
     static fetch(id){
         return new Promise((resolve, reject) => {
-            Vehiculo.findById(id).exec((err, vehiculo) => {
-                if (err || !vehiculo){
-                    reject ({message: "No pudo econtrarse el vehiculo"});
+            Recorrido.findById(id).exec((err, recorrido) => {
+                if (err || !recorrido){
+                    reject ({message: "No pudo econtrarse el recorrido"});
                 } else {
-                    resolve(vehiculo);
+                    resolve(recorrido);
                 }
             })
         })
@@ -28,11 +28,11 @@ class VehiculoDAO{
 
     static find(filter, pagination){
         return new Promise((resolve, reject) => {
-            Vehiculo.find(filter).limit(pagination.limit).skip(pagination.offset).exec((err, vehiculos) => {
-                if (err || !vehiculos){
+            Recorrido.find(filter).limit(pagination.limit).skip(pagination.offset).exec((err, recorridos) => {
+                if (err || !recorridos){
                     reject({message: "no se pudo realizar la busqueda"});
                 }else{
-                    resolve(vehiculos);                    
+                    resolve(recorridos);                    
                 }
             })
         })
@@ -40,7 +40,7 @@ class VehiculoDAO{
 
     static count(filter){
         return new Promise((resolve, reject) => {
-            Vehiculo.count(filter).exec((err, total) => {
+            Recorrido.count(filter).exec((err, total) => {
                 if (err){
                     reject({message: "no se pudo realizar la busqueda"});
                 }else{
@@ -50,16 +50,16 @@ class VehiculoDAO{
         })
     }
 
-    static update(id, vehiculo) {
-		const {_id, ...data} = vehiculo._doc;
+    static update(id, recorrido) {
+		const {_id, ...data} = recorrido._doc;
 		let dtoUpdate = {$set:data}
         return new Promise((resolve, reject) => {
-            Vehiculo.findByIdAndUpdate(id, dtoUpdate).exec((err, vehiculo2) => {
-                if (err || !vehiculo2){
+            Recorrido.findByIdAndUpdate(id, dtoUpdate).exec((err, recorrido2) => {
+                if (err || !recorrido2){
                     console.log(err);
                     reject({message: "error interno"});
                 } else {
-                    resolve(vehiculo2);
+                    resolve(recorrido2);
                 }
             })
         })
@@ -68,9 +68,9 @@ class VehiculoDAO{
     static delete(id){
         return new Promise((resolve, reject) => {
             
-            Vehiculo.findByIdAndRemove(id).exec((err, deleted) => {
+            Recorrido.findByIdAndRemove(id).exec((err, deleted) => {
                 if (err || !deleted){
-                    reject({message: "no se puede borrar el vehiculo"});
+                    reject({message: "no se puede borrar el recorrido"});
                 } else {
                     resolve({_id:id});
                 }
@@ -79,4 +79,4 @@ class VehiculoDAO{
     }
 }
 
-module.exports = VehiculoDAO
+module.exports = RecorridoDAO

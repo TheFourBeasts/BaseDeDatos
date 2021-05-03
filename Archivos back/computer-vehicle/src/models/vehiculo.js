@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 
 const VehiculoSchema = Schema({
-	posicionactual: {
+	posicionActual: {
 		type: String,
 	},
-	usuarios: {
-		type: Schema.Types.ObjectId,
+	recorridoTotal: {
+		type: Schema.Types.Mixed
 	},
-	recorridototal: {
-		type: String,
-	},
+	usuario: {
+		type: String
+	}
 	
 });
 
