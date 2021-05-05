@@ -7,7 +7,7 @@ const recorridoRouter = require('./routes/recorridoRouter')
 //</import-routes>
 const app = express();
 const cors = require('cors')
-
+const mqttService = require('./services/mqttService')
 //cors
 app.use(cors())
 
@@ -35,5 +35,10 @@ app.use((err, req, res, next) => {
         error: err.message
     })
 })
+
+//Conexión mqtt
+mqttService.init()
+//mqttService.subscribeTopic()
+//mqttService.publishTopic("Hola")
 
 module.exports = app;
