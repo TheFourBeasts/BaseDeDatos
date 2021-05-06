@@ -1,10 +1,13 @@
 const mqtt = require('mqtt');
 const match = require('mqtt-match');
+
+// Próximamente
 const config = require('../../config/config.json');
 require('dotenv').config();
 
 var client;
 
+//Parámetros de Conexión Mqtt
 const host = 'mqtt://node02.myqtthub.com'
 const port = 1883 
 const username = "lucas_vehiculo"
@@ -12,21 +15,32 @@ const password ="vehiculo"
 const clientId = 'mqttjs_' + 'lucas.capponi@gmail.com'
 const TOPIC_SUBSCRIBE = 'esp/led'
 const TOPIC_PUBLISH = 'esp/led'
-const parametrosConexion = [host,port,username,password,clientId]
+const parametrosConexion = {
+    port: 1883,
+    host: 'mqtt://node02.myqtthub.com',
+    clientId: 'lucas.capponi@gmail.com',
+    username: 'lucas_vehiculo',
+    password: 'vehiculo',
+    keepalive: 60,
+    reconnectPeriod: 1000,
+    protocolId: 'MQIsdp',
+    protocolVersion: 3,
+    clean: true,
+    encoding: 'utf8'
+};//[host,port,username,password,clientId]
 
-
+// Conexion Mqtt
 const init = () => {
-    client = mqtt.connect(parametrosConexion);
+    client = mqtt.connect(host,parametrosConexion);
     client.on('connect', () => {
         console.log("[MQTTSERVICE][CONNECTED]");
-    // Aca entra donde se suscribió computer-vehicle
+    // Donde se suscribió computer-vehicle
         subscribeTopic();
+    // Donde y que mensaje publica computer-vehicle
         publishTopic("Hola");
     });
-    console.log(parametrosConexion)
-    
 }
-
+//Suscripción
 const subscribeTopic = () => {
     client.subscribe(`${TOPIC_SUBSCRIBE}`, err => {
         if (!err) {
@@ -35,7 +49,8 @@ const subscribeTopic = () => {
     })
 }
 
-const unregisterTopic = (topic) => {
+// Desuscripción de tópico
+const unsubscribeTopic = (topic) => {
     client.unsubscribe(topic, err => {
         if (!err) {
             console.log("[MQTTSERVICE][UNSUSCRIBE]", topic)
@@ -43,6 +58,7 @@ const unregisterTopic = (topic) => {
     })
 }
 
+// Publicación
 const publishTopic = (message) => {
     console.log("[MQTTSERVICE][PUB]", TOPIC_SUBSCRIBE)
     client.publish(`${TOPIC_SUBSCRIBE}`, message)
@@ -52,6 +68,6 @@ const publishTopic = (message) => {
 module.exports = {
     init,
     subscribeTopic,
-    unregisterTopic,
+    unsubscribeTopic,
     publishTopic,
 }
