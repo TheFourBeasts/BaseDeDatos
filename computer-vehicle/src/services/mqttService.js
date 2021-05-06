@@ -9,12 +9,7 @@ var client;
 
 //Parámetros de Conexión Mqtt
 const host = 'mqtt://node02.myqtthub.com'
-const port = 1883 
-const username = "lucas_vehiculo"
-const password ="vehiculo"
-const clientId = 'mqttjs_' + 'lucas.capponi@gmail.com'
-const TOPIC_SUBSCRIBE = 'esp/led'
-const TOPIC_PUBLISH = 'esp/led'
+const topic = 'esp/led'
 const parametrosConexion = {
     port: 1883,
     host: 'mqtt://node02.myqtthub.com',
@@ -34,23 +29,33 @@ const init = () => {
     client = mqtt.connect(host,parametrosConexion);
     client.on('connect', () => {
         console.log("[MQTTSERVICE][CONNECTED]");
-    // Donde se suscribió computer-vehicle
+        // Donde se suscribió computer-vehicle
         subscribeTopic();
-    // Donde y que mensaje publica computer-vehicle
-        publishTopic("Hola");
+        // Obtencion del mensaje del topico suscripto
+        messageTopic();
+        // Donde y que mensaje publica computer-vehicle
+        publishTopic("Luciano: Hola");
     });
 }
 //Suscripción
 const subscribeTopic = () => {
-    client.subscribe(`${TOPIC_SUBSCRIBE}`, err => {
+    client.subscribe(`${topic}`, err => {
         if (!err) {
-            console.log("[MQTTSERVICE][SUSCRIBE]", TOPIC_SUBSCRIBE)
+            console.log("[MQTTSERVICE][SUSCRIBE]", topic)
         }
     })
 }
 
+//Obtencion del mensaje
+const messageTopic = () => {
+    client.on('message',function(topic, message, packet){
+        if(message)
+        console.log("message is "+ message.toString());
+        console.log("topic is "+ topic);
+    });
+}
 // Desuscripción de tópico
-const unsubscribeTopic = (topic) => {
+const unsubscribeTopic = (topic_aux) => {
     client.unsubscribe(topic, err => {
         if (!err) {
             console.log("[MQTTSERVICE][UNSUSCRIBE]", topic)
@@ -60,8 +65,8 @@ const unsubscribeTopic = (topic) => {
 
 // Publicación
 const publishTopic = (message) => {
-    console.log("[MQTTSERVICE][PUB]", TOPIC_SUBSCRIBE)
-    client.publish(`${TOPIC_SUBSCRIBE}`, message)
+    console.log("[MQTTSERVICE][PUB]", topic)
+    client.publish(`${topic}`, message)
     console.log("[MQTTSERVICE][PUB MESSAGE]", message)
 }
 
@@ -69,5 +74,6 @@ module.exports = {
     init,
     subscribeTopic,
     unsubscribeTopic,
+    messageTopic,
     publishTopic,
 }
