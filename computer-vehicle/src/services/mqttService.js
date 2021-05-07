@@ -34,7 +34,7 @@ const init = () => {
         // Obtencion del mensaje del topico suscripto
         messageTopic();
         // Donde y que mensaje publica computer-vehicle
-        publishTopic("Luciano: Hola");
+        publishTopic("off");
     });
 }
 //Suscripción
