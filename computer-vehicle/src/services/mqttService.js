@@ -8,9 +8,10 @@ require('dotenv').config();
 var client;
 
 //Parámetros de Conexión Mqtt
-const host = 'mqtt://node02.myqtthub.com'
+//const host = 'mqtt://node02.myqtthub.com'
+const host = 'wss://zc482089.en.emqx.cloud:8084/mqtt'
 const topic = 'esp/led'
-const parametrosConexion = {
+/*const parametrosConexion = {
     port: 1883,
     host: 'mqtt://node02.myqtthub.com',
     clientId: 'lucas.capponi@gmail.com',
@@ -22,7 +23,21 @@ const parametrosConexion = {
     protocolVersion: 3,
     clean: true,
     encoding: 'utf8'
-};//[host,port,username,password,clientId]
+};*///[host,port,username,password,clientId]
+
+const parametrosConexion = {
+    port: 8084,
+    host: 'wss://zc482089.en.emqx.cloud:8084/mqtt',
+    clientId: 'pepito@gmail.com',
+    username: 'vehiculo123',
+    password: 'emqxd123',
+    keepalive: 60,
+    reconnectPeriod: 1000,
+    protocolId: 'MQIsdp',
+    protocolVersion: 3,
+    clean: true,
+    encoding: 'utf8'
+};
 
 // Conexion Mqtt
 const init = () => {
@@ -50,8 +65,9 @@ const subscribeTopic = () => {
 const messageTopic = () => {
     client.on('message',function(topic, message, packet){
         if(message)
-        console.log("message is "+ message.toString());
-        console.log("topic is "+ topic);
+        console.log(topic,": ", message.toString());
+        //console.log("message is "+ message.toString());
+        //console.log("topic is "+ topic);
     });
 }
 // Desuscripción de tópico
@@ -73,7 +89,7 @@ const publishTopic = (message) => {
 module.exports = {
     init,
     subscribeTopic,
-    unsubscribeTopic,
+    //unsubscribeTopic,
     messageTopic,
     publishTopic,
 }
