@@ -66,6 +66,8 @@ const messageTopic = () => {
     client.on('message',function(topic, message, packet){
         if(message)
         console.log(topic,": ", message.toString());
+        //var d = new Date();
+        //console.log(topic,": ", message.toString()+' '+d.toString()+ ':'+ d.getMilliseconds());
         //console.log("message is "+ message.toString());
         //console.log("topic is "+ topic);
     });
@@ -83,6 +85,8 @@ const unsubscribeTopic = (topic_aux) => {
 const publishTopic = (message) => {
     console.log("[MQTTSERVICE][PUB]", topic)
     client.publish(`${topic}`, message)
+    //var d = new Date();
+    //client.publish(`${topic}`, message+' '+d.toString()+ ':'+ d.getMilliseconds())
     console.log("[MQTTSERVICE][PUB MESSAGE]", message)
 }
 
