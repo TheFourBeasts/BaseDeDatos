@@ -4,6 +4,10 @@ const UsuarioDTO = require('../dtos/usuarioDTO')
 const UsuarioFilter = require('../filters/usuarioFilter')
 const UsuarioAssembler = require('../assemblers/usuarioAssembler')
 
+
+const jsonwebtoken = require('jsonwebtoken')
+const secrets = require('../utils/secrets')
+
 class UsuarioController extends GenericController{
 
     static getUsuarioById(req, res, next) {
@@ -62,6 +66,19 @@ class UsuarioController extends GenericController{
                     data: message
                 })
             })
+    }
+
+	static auth(req, res, next) {
+        const requestUsername = req.body.username
+        const requestPassword = req.body.password
+        UsuarioController.resolve(next, UsuarioService.auth(requestUsername, requestPassword), usuario => {
+            const { id, password, salt, ...jwtPayload } = UsuarioAssembler.toDTO(usuario)
+            const jwt = jsonwebtoken.sign({...jwtPayload}, secrets.jwt)
+            
+            res.status(200).send({
+                data: jwt,
+            })
+        }, 401)
     }
 }
 

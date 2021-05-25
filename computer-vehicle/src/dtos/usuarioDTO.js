@@ -4,10 +4,9 @@ class UsuarioDTO extends GenericModelDTO {
     constructor(){
 		super()
 		this.id = null
-		this.id = null
-		this.nombre = null
-		this.apellido = null
-		this.recorrido = null
+		this.username = null
+		this.password = null
+		this.salt = null
     }
 
     hydrate(data){

@@ -89,7 +89,21 @@ const publishTopic = (message) => {
     //client.publish(`${topic}`, message+' '+d.toString()+ ':'+ d.getMilliseconds())
     console.log("[MQTTSERVICE][PUB MESSAGE]", message)
 }
+const onMessageHandler = (topic, message) => {
+    console.log("[MQTTSERVICE][LISTEN]", topic);
+  //  socketService.sendMessage("IOT", topic + " " + message);
+    
+    try {
+        // Check the message is json formatted
+        JSON.parse(message)
+        
+    } 
+    catch (error) {
+        console.log("El mensaje no es JSON");
+    }
 
+
+};
 module.exports = {
     init,
     subscribeTopic,

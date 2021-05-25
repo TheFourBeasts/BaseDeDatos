@@ -1,5 +1,16 @@
 const UsuarioDAO = require('../daos/usuarioDAO')
 
+const crypto = require('crypto')
+
+// hash password with sha256
+const sha256 = function(password, salt){
+    const hash = crypto.createHmac('sha256', salt)
+    hash.update(password)
+    return {
+        salt,
+        passwordHash: hash.digest('hex')
+    }
+}
 class UsuarioService{
     static async get(id) {
 		try {
@@ -51,6 +62,17 @@ class UsuarioService{
 		} catch (err) {
 			throw err
 		}
+    }
+
+	static async auth(username, requestPassword) {
+        const usuario = await UsuarioDAO.getByUsername(username)
+        if(usuario){
+            const { passwordHash } = sha256(requestPassword, usuario.salt)
+            if (usuario.password === passwordHash) {
+                return usuario
+            }
+        }
+        throw new Error('Invalid login data')
     }
 }
 

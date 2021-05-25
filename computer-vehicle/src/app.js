@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const usuarioRouter = require('./routes/usuarioRouter')
 const vehiculoRouter = require('./routes/vehiculoRouter')
 const recorridoRouter = require('./routes/recorridoRouter')
+const { isAuth } = require('./middlewares/authMiddleware')
+const conductorRouter = require('./routes/conductorRouter')
 //</import-routes>
 const app = express();
 const cors = require('cors')
@@ -17,9 +19,10 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 //<routes>
-app.use('/usuarios', usuarioRouter)
+app.use('/auth', usuarioRouter)
 app.use('/vehiculos', vehiculoRouter)
 app.use('/recorridos', recorridoRouter)
+app.use('/conductors', conductorRouter)
 //</routes>
 
 //erros

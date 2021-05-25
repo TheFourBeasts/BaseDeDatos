@@ -16,18 +16,20 @@ class UsuarioAssembler extends GenericAssembler{
 
 	static toDTO(usuario) {
 		const usuarioDTO = super.toDTO(usuario, UsuarioDTO)
-		usuarioDTO.username = usuario.username
-		usuarioDTO.password = usuario.password
-		usuarioDTO.salt = usuario.salt
+		usuarioDTO.id = usuario.id
+		usuarioDTO.nombre = usuario.nombre
+		usuarioDTO.apellido = usuario.apellido
+		usuarioDTO.recorrido = usuario.recorrido
 		
 		return usuarioDTO
 	}
 
 	static fromDTO(usuarioDTO) {
 		const usuario = super.fromDTO(usuarioDTO, Usuario)
-		usuario.username = usuarioDTO.username
-		usuario.password = usuarioDTO.password
-		usuario.salt = usuarioDTO.salt
+		usuario.id = usuarioDTO.id
+		usuario.nombre = usuarioDTO.nombre
+		usuario.apellido = usuarioDTO.apellido
+		usuario.recorrido = usuarioDTO.recorrido
 		
 		return usuario
 	}

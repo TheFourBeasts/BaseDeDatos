@@ -1,4 +1,1 @@
-{
-    "dbs": [ "mongo" ],
-    "plugins": [  ]
-}
+{"dbs":["mongo"],"plugins":[],"commands":["auth"]}

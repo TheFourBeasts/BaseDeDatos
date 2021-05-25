@@ -3,17 +3,14 @@ const Schema = mongoose.Schema;
 
 
 const UsuarioSchema = Schema({
-	id: {
+	username: {
 		type: String,
 	},
-	nombre: {
+	password: {
 		type: String,
 	},
-	apellido: {
+	salt: {
 		type: String,
-	},
-	recorrido: {
-		type: Schema.Types.ObjectId,
 	},
 	
 });

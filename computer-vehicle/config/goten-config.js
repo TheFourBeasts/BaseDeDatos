@@ -1,3 +1,4 @@
+
 const config = require('./config')
 module.exports = config
 module.exports.getConnectionStringToMongo = () => {
@@ -5,3 +6,4 @@ module.exports.getConnectionStringToMongo = () => {
     const mongoUsrPass = mongoConfig.usr ? `${mongoConfig.usr}:${mongoConfig.pass}@` : ""
     return `mongodb://${mongoUsrPass}${mongoConfig.host}:${mongoConfig.port}/${mongoConfig.dbname}`
 }
+

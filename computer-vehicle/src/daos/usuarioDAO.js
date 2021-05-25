@@ -18,7 +18,7 @@ class UsuarioDAO{
         return new Promise((resolve, reject) => {
             Usuario.findById(id).exec((err, usuario) => {
                 if (err || !usuario){
-                    reject ({message: "No pudo econtrarse el usuario"});
+                    reject ({message: "No pudo encontrarse el usuario"});
                 } else {
                     resolve(usuario);
                 }
@@ -72,10 +72,14 @@ class UsuarioDAO{
                 if (err || !deleted){
                     reject({message: "no se puede borrar el usuario"});
                 } else {
-                    resolve({_id:id});
+                    resolve({id:id});
                 }
             })
         })
+    }
+
+	static getByUsername(username) {
+        return Usuario.findOne({ username})
     }
 }
 
