@@ -1,4 +1,7 @@
 const ConductorDAO = require('../daos/conductorDAO')
+const UsuarioService= require('../services/usuarioService')
+const UsuarioFilter = require('../filters/usuarioFilter')
+const UsuarioDAO = require('../daos/usuarioDAO') 
 
 class ConductorService{
     static async get(id) {
@@ -28,21 +31,32 @@ class ConductorService{
     }
 
     static async save(conductor) {
-		try {
+		let usuario = await UsuarioDAO.getByUsername(conductor.usuario)
+		if(usuario){
+			conductor.usuario = usuario
 			conductor = await ConductorDAO.save(conductor)
             return conductor
-		} catch (err) {
-			throw err
 		}
+		throw new Error('Invalid username')
+		
     }
 
 	static async update(id, conductor) {
-		try {
+		let usuarioViejo = await ConductorDAO.fetch(id)
+		//let validar = usuarioViejo.usuario
+		let json = JSON.stringify(usuarioViejo.usuario)
+		let usernameViejo = JSON.parse(json).username
+		if(usernameViejo === conductor.usuario){
+			let usuarioEncontrado = await UsuarioDAO.getByUsername(conductor.usuario)
+			if(usuarioEncontrado){
+			conductor.usuario = usuarioEncontrado
 			conductor = await ConductorDAO.update(id, conductor)
 			return await this.get(id)
-		} catch (err) {
-			throw err
+			}
+			
 		}
+		throw new Error('Invalid username')		
+			
     }
 
     static async delete(id) {

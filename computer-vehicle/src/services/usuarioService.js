@@ -40,8 +40,12 @@ class UsuarioService{
 
     static async save(usuario) {
 		try {
-			usuario = await UsuarioDAO.save(usuario)
-            return usuario
+			const usuario_anterior = await UsuarioDAO.getByUsername(usuario.username)
+			if(!usuario_anterior){
+				usuario = await UsuarioDAO.save(usuario)
+				return usuario
+			}
+			throw new Error('Username is duplicate')				
 		} catch (err) {
 			throw err
 		}

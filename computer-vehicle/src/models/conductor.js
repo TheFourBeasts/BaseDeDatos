@@ -10,10 +10,10 @@ const ConductorSchema = Schema({
 		type: String,
 	},
 	usuario: {
-		type: Schema.Types.ObjectId,
+		type: Schema.Types.Mixed,
 	},
 	recorrido: {
-		type: Schema.Types.ObjectId,
+		type: String,
 	},
 	
 });
