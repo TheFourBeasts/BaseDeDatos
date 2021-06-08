@@ -77,6 +77,10 @@ class ConductorDAO{
             })
         })
     }
+
+	static getByUsername(username) {
+        return Conductor.findOne({ username})
+    }
 }
 
 module.exports = ConductorDAO

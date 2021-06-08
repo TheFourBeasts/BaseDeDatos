@@ -16,22 +16,22 @@ class RecorridoAssembler extends GenericAssembler{
 
 	static toDTO(recorrido) {
 		const recorridoDTO = super.toDTO(recorrido, RecorridoDTO)
-		recorridoDTO.posicion = recorrido.posicion
+		recorridoDTO.timestamp = recorrido.timestamp
 		recorridoDTO.velocidad = recorrido.velocidad
-		recorridoDTO.fecha = recorrido.fecha
-		recorridoDTO.hora = recorrido.hora
 		recorridoDTO.kilometraje = recorrido.kilometraje
+		recorridoDTO.posicion = recorrido.posicion
+		recorridoDTO.conductor = recorrido.conductor
 		
 		return recorridoDTO
 	}
 
 	static fromDTO(recorridoDTO) {
 		const recorrido = super.fromDTO(recorridoDTO, Recorrido)
-		recorrido.posicion = recorridoDTO.posicion
+		recorrido.timestamp = recorridoDTO.timestamp
 		recorrido.velocidad = recorridoDTO.velocidad
-		recorrido.fecha = recorridoDTO.fecha
-		recorrido.hora = recorridoDTO.hora
-		recorrido.kilometraje = recorridoDTO.kilometraje 
+		recorrido.kilometraje = recorridoDTO.kilometraje
+		recorrido.posicion = recorridoDTO.posicion
+		recorrido.conductor = recorridoDTO.conductor
 		
 		return recorrido
 	}

@@ -3,19 +3,19 @@ const Schema = mongoose.Schema;
 
 
 const RecorridoSchema = Schema({
-	posicion: {
+	timestamp: {
 		type: String,
 	},
 	velocidad: {
 		type: String,
 	},
-	fecha: {
-		type: Date,
-	},
-	hora: {
-		type: Date,
-	},
 	kilometraje: {
+		type: String,
+	},
+	posicion: {
+		type: String,
+	},
+	conductor: {
 		type: String,
 	},
 	

@@ -4,6 +4,10 @@ const ConductorDTO = require('../dtos/conductorDTO')
 const ConductorFilter = require('../filters/conductorFilter')
 const ConductorAssembler = require('../assemblers/conductorAssembler')
 
+
+const jsonwebtoken = require('jsonwebtoken')
+const secrets = require('../utils/secrets')
+
 class ConductorController extends GenericController{
 
     static getConductorById(req, res, next) {
@@ -62,6 +66,19 @@ class ConductorController extends GenericController{
                     data: message
                 })
             })
+    }
+
+	static auth(req, res, next) {
+        const requestUsername = req.body.username
+        const requestPassword = req.body.password
+        ConductorController.resolve(next, ConductorService.auth(requestUsername, requestPassword), conductor => {
+            const { id, password, salt, ...jwtPayload } = ConductorAssembler.toDTO(conductor)
+            const jwt = jsonwebtoken.sign({...jwtPayload}, secrets.jwt)
+            
+            res.status(200).send({
+                data: jwt,
+            })
+        }, 401)
     }
 }
 

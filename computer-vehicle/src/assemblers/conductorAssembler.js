@@ -1,6 +1,4 @@
 const GenericAssembler = require('./genericAssembler')
-
-
 const Conductor = require('../models/conductor')
 const ConductorDTO = require('../dtos/conductorDTO')
 
@@ -18,7 +16,9 @@ class ConductorAssembler extends GenericAssembler{
 		const conductorDTO = super.toDTO(conductor, ConductorDTO)
 		conductorDTO.nombre = conductor.nombre
 		conductorDTO.apellido = conductor.apellido
-		conductorDTO.usuario = conductor.usuario
+		conductorDTO.username = conductor.username
+		conductorDTO.password = conductor.password
+		conductorDTO.salt = conductor.salt
 		conductorDTO.recorrido = conductor.recorrido
 		
 		return conductorDTO
@@ -28,7 +28,9 @@ class ConductorAssembler extends GenericAssembler{
 		const conductor = super.fromDTO(conductorDTO, Conductor)
 		conductor.nombre = conductorDTO.nombre
 		conductor.apellido = conductorDTO.apellido
-		conductor.usuario = conductorDTO.usuario
+		conductor.username = conductorDTO.username
+		conductor.password = conductorDTO.password
+		conductor.salt = conductorDTO.salt
 		conductor.recorrido = conductorDTO.recorrido
 		
 		return conductor

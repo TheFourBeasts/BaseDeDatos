@@ -18,7 +18,7 @@ class RecorridoDAO{
         return new Promise((resolve, reject) => {
             Recorrido.findById(id).exec((err, recorrido) => {
                 if (err || !recorrido){
-                    reject ({message: "No pudo econtrarse el recorrido"});
+                    reject ({message: "No pudo encontrarse el recorrido"});
                 } else {
                     resolve(recorrido);
                 }
@@ -72,7 +72,7 @@ class RecorridoDAO{
                 if (err || !deleted){
                     reject({message: "no se puede borrar el recorrido"});
                 } else {
-                    resolve({_id:id});
+                    resolve({id:id});
                 }
             })
         })

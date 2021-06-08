@@ -6,7 +6,9 @@ class ConductorDTO extends GenericModelDTO {
 		this.id = null
 		this.nombre = null
 		this.apellido = null
-		this.usuario = null
+		this.username = null
+		this.password = null
+		this.salt = null
 		this.recorrido = null
     }
 

@@ -3,11 +3,11 @@ class RecorridoFilter extends GenericFilter{
     constructor(){
         super();
         this.data =  Object.assign(this.data,{
-            posicion: null,
+            timestamp: null,
 			velocidad: null,
-			fecha: null,
-			hora: null,
-            kilometraje:null,
+			kilometraje: null,
+			posicion: null,
+			conductor: null,
         })
     }
 

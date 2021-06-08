@@ -9,11 +9,17 @@ const ConductorSchema = Schema({
 	apellido: {
 		type: String,
 	},
-	usuario: {
-		type: Schema.Types.Mixed,
+	username: {
+		type: String,
+	},
+	password: {
+		type: String,
+	},
+	salt: {
+		type: String,
 	},
 	recorrido: {
-		type: String,
+		type: Schema.Types.Mixed,
 	},
 	
 });

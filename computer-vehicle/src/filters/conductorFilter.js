@@ -3,10 +3,9 @@ class ConductorFilter extends GenericFilter{
     constructor(){
         super();
         this.data =  Object.assign(this.data,{
-            nombre: null,
-			apellido: null,
-			usuario: null,
-			recorrido: null,
+            username: null,
+			password: null,
+			salt: null,
         })
     }
 

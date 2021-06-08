@@ -4,11 +4,11 @@ class RecorridoDTO extends GenericModelDTO {
     constructor(){
 		super()
 		this.id = null
-		this.posicion = null
+		this.timestamp = null
 		this.velocidad = null
-		this.fecha = null
-		this.hora = null
-		this.kilometraje=null
+		this.kilometraje = null
+		this.posicion = null
+		this.conductor = null
     }
 
     hydrate(data){

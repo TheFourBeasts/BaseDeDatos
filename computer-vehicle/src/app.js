@@ -1,11 +1,10 @@
 var express = require('express');
 const bodyParser = require('body-parser');
 //<import-routes>
-const usuarioRouter = require('./routes/usuarioRouter')
+const conductorRouter = require('./routes/conductorRouter')
+const { isAuth } = require('./middlewares/authMiddleware')
 const vehiculoRouter = require('./routes/vehiculoRouter')
 const recorridoRouter = require('./routes/recorridoRouter')
-const { isAuth } = require('./middlewares/authMiddleware')
-const conductorRouter = require('./routes/conductorRouter')
 //</import-routes>
 const app = express();
 const cors = require('cors')
@@ -19,10 +18,9 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 //<routes>
-app.use('/auth', usuarioRouter)
+app.use('/conductors', conductorRouter)
 app.use('/vehiculos', vehiculoRouter)
 app.use('/recorridos', recorridoRouter)
-app.use('/conductors', conductorRouter)
 //</routes>
 
 //erros

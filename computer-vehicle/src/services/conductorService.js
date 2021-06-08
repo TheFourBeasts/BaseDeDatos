@@ -1,8 +1,17 @@
 const ConductorDAO = require('../daos/conductorDAO')
-const UsuarioService= require('../services/usuarioService')
-const UsuarioFilter = require('../filters/usuarioFilter')
-const UsuarioDAO = require('../daos/usuarioDAO') 
+const RecorridoService=require('../services/recorridoService')
+const crypto = require('crypto')
+const recorrido = require('../models/recorrido')
 
+// hash password with sha256
+const sha256 = function(password, salt){
+    const hash = crypto.createHmac('sha256', salt)
+    hash.update(password)
+    return {
+        salt,
+        passwordHash: hash.digest('hex')
+    }
+}
 class ConductorService{
     static async get(id) {
 		try {
@@ -31,32 +40,35 @@ class ConductorService{
     }
 
     static async save(conductor) {
-		let usuario = await UsuarioDAO.getByUsername(conductor.usuario)
-		if(usuario){
-			conductor.usuario = usuario
-			conductor = await ConductorDAO.save(conductor)
-            return conductor
+		try {
+			let conductor_anterior= await ConductorDAO.getByUsername(conductor.username)
+			if(!conductor_anterior){
+				let recorrido_auxiliar= {
+					timestamp:conductor.recorrido.timestamp,
+					kilometraje:conductor.recorrido.kilometraje,
+					velocidad:conductor.recorrido.velocidad,
+					posicion:conductor.recorrido.posicion,
+					conductor: conductor.username
+				}
+				console.log(recorrido_auxiliar)
+				let recorrido = await RecorridoService.save(recorrido_auxiliar)
+				conductor.recorrido= recorrido
+				conductor = await ConductorDAO.save(conductor)
+				return conductor
+			}
+			throw new Error('Username is duplicated')
+		} catch (err) {
+			throw err
 		}
-		throw new Error('Invalid username')
-		
     }
 
 	static async update(id, conductor) {
-		let usuarioViejo = await ConductorDAO.fetch(id)
-		//let validar = usuarioViejo.usuario
-		let json = JSON.stringify(usuarioViejo.usuario)
-		let usernameViejo = JSON.parse(json).username
-		if(usernameViejo === conductor.usuario){
-			let usuarioEncontrado = await UsuarioDAO.getByUsername(conductor.usuario)
-			if(usuarioEncontrado){
-			conductor.usuario = usuarioEncontrado
+		try {
 			conductor = await ConductorDAO.update(id, conductor)
 			return await this.get(id)
-			}
-			
+		} catch (err) {
+			throw err
 		}
-		throw new Error('Invalid username')		
-			
     }
 
     static async delete(id) {
@@ -65,6 +77,17 @@ class ConductorService{
 		} catch (err) {
 			throw err
 		}
+    }
+
+	static async auth(username, requestPassword) {
+        const conductor = await ConductorDAO.getByUsername(username)
+        if(conductor){
+            const { passwordHash } = sha256(requestPassword, conductor.salt)
+            if (conductor.password === passwordHash) {
+                return conductor
+            }
+        }
+        throw new Error('Invalid login data')
     }
 }
 
